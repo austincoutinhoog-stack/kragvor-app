@@ -22,11 +22,14 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          api-level: 36
+          build-tools: 36.0.0
 
       - name: Set up Node 20
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '20'
 
       - name: Install dependencies
         run: npm install
@@ -35,6 +38,16 @@ jobs:
         run: npx cap sync android
 
       - name: Make Gradle wrapper executable
+        run: chmod +x android/gradlew
+
+      - name: Build debug APK
+        run: cd android && ./gradlew assembleDebug --stacktrace
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: kragvor-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk     - name: Make Gradle wrapper executable
         run: chmod +x android/gradlew
 
       - name: Build debug APK
