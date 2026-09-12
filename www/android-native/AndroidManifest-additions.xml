@@ -1,0 +1,24 @@
+<!--
+  Add these <uses-permission> lines inside <manifest> in
+  android/app/src/main/AndroidManifest.xml (above the <application> tag).
+  ACCESS_FINE_LOCATION and READ_PHONE_STATE are what SignalDetectorPlugin
+  actually requests at runtime; the others are what the rest of the app
+  already needs for GPS/online checks and are likely already present.
+-->
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.INTERNET" />
+
+<!--
+  READ_PHONE_STATE is classified as a "dangerous" permission and, on a
+  production release, can also trigger Play Console's sensitive-permission
+  review (it's normally associated with call/IMEI access, even though this
+  plugin only uses it for cellular signal-strength callbacks). If Play
+  Store distribution is the goal, be ready to fill out the Permissions
+  Declaration form explaining that usage, or consider shipping cellular
+  monitoring as an optional feature gated behind an in-app toggle so it's
+  clearly opt-in.
+-->

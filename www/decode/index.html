@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>DECODE</title>
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#08080a" />
+<link rel="icon" href="icons/icon-192.png" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<link rel="stylesheet" href="style.css" />
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="kragvor-bridge.js"></script>
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- ============ HEADER ============ -->
+    <header class="app-header">
+      <div class="header-top">
+        <h1 class="title">DECODE</h1>
+        <button id="stats-btn" class="icon-btn" aria-label="View statistics" title="Statistics">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6">
+            <rect x="4" y="12" width="4" height="8"></rect>
+            <rect x="10" y="7" width="4" height="13"></rect>
+            <rect x="16" y="3" width="4" height="17"></rect>
+          </svg>
+        </button>
+      </div>
+
+      <div class="mode-row" role="group" aria-label="Game mode">
+        <button type="button" class="mode-btn" id="mode-random-btn" data-mode="random" aria-pressed="true">RANDOM</button>
+        <button type="button" class="mode-btn" id="mode-daily-btn" data-mode="daily" aria-pressed="false">DAILY</button>
+      </div>
+
+      <div class="header-meta">
+        <div class="meta-item">
+          <span class="meta-label">ATTEMPTS</span>
+          <span class="meta-value" id="attempts-value">0 / 6</span>
+        </div>
+        <div class="meta-divider"></div>
+        <div class="meta-item">
+          <span class="meta-label">TIME</span>
+          <span class="meta-value" id="timer-value">00:00</span>
+        </div>
+      </div>
+
+      <div id="status-bar" class="status-bar" aria-live="polite"></div>
+
+      <div id="daily-banner" class="daily-banner hidden" role="status">
+        <span id="daily-banner-text" class="daily-banner-text"></span>
+        <button type="button" id="daily-banner-view-btn" class="daily-banner-btn">VIEW RESULT</button>
+      </div>
+    </header>
+
+    <!-- ============ BOARD ============ -->
+    <main class="board-wrap">
+      <div id="board" class="board" role="grid" aria-label="Guess board"></div>
+    </main>
+
+    <!-- ============ KEYBOARD ============ -->
+    <footer class="keyboard-wrap">
+      <div id="keyboard" class="keyboard" role="group" aria-label="On-screen keyboard"></div>
+
+      <div class="controls">
+        <button id="new-game-btn" class="control-btn">NEW GAME</button>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ============ END GAME MODAL ============ -->
+  <div id="result-modal" class="modal-overlay hidden">
+    <div class="modal" role="document">
+      <h2 id="result-title" class="modal-title">ACCESS GRANTED</h2>
+      <div id="result-body" class="modal-body"></div>
+      <div class="modal-actions">
+        <button id="modal-play-again" class="control-btn control-btn--primary">PLAY AGAIN</button>
+        <button id="share-btn" class="control-btn control-btn--ghost" aria-label="Share result">SHARE RESULT</button>
+      </div>
+      <div id="share-status" class="share-status" role="status" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <!-- ============ STATS MODAL ============ -->
+  <div id="stats-modal" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header-row">
+        <h2 class="modal-title">STATISTICS</h2>
+        <button id="stats-close" class="icon-btn" aria-label="Close statistics">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+            <line x1="4" y1="4" x2="20" y2="20"></line>
+            <line x1="20" y1="4" x2="4" y2="20"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-cell">
+          <span class="stat-num" id="stat-played">0</span>
+          <span class="stat-label">PLAYED</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num" id="stat-win-pct">0</span>
+          <span class="stat-label">WIN %</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num" id="stat-streak">0</span>
+          <span class="stat-label">RANDOM STREAK</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num" id="stat-best-streak">0</span>
+          <span class="stat-label">BEST STREAK</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num" id="stat-best-score">—</span>
+          <span class="stat-label">BEST SCORE</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num" id="stat-won">0</span>
+          <span class="stat-label">WON</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sr-announcer" class="sr-only" aria-live="assertive" role="status"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
